@@ -1,9 +1,8 @@
-import React from 'react';
+
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Heart, Trash2 } from 'lucide-react';
 import { useFavorites } from '../context/FavoriteContext';
 import { useCart } from '../context/CartContext';
-import { Link } from 'react-router-dom';
 
 interface Props {
   isOpen: boolean;

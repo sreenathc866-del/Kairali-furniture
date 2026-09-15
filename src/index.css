@@ -1,0 +1,45 @@
+@import "tailwindcss";
+
+@theme {
+  --color-kairali-cream: #FDFBF7;
+  --color-kairali-ivory: #F5F2EA;
+  --color-kairali-beige: #E6E1D6;
+  --color-kairali-wood: #8B5A2B;
+  --color-kairali-wood-dark: #5C3A21;
+  --color-kairali-brown: #3E2723;
+  --color-kairali-green: #6B8E7B;
+  --color-kairali-green-dark: #4A6355;
+
+  --font-serif: 'Playfair Display', serif;
+  --font-sans: 'Inter', sans-serif;
+}
+
+@layer base {
+  :root {
+    --background: #FDFBF7;
+    --foreground: #3E2723;
+  }
+  
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: 'Inter', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 500;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}

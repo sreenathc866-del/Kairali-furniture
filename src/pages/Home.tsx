@@ -5,48 +5,12 @@ import { ArrowRight, MapPin, Phone } from 'lucide-react';
 import { FaInstagram } from 'react-icons/fa';
 import ProductCard, { type Product } from '../components/ProductCard';
 
-const dummyProducts: Product[] = [
-  {
-    id: '1',
-    name: 'Aarav Lounge Sofa',
-    description: 'A masterpiece of comfort featuring natural linen and teak wood frame.',
-    price: 85000,
-    image: 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&q=80&w=800',
-    hoverImage: 'https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?auto=format&fit=crop&q=80&w=800',
-    isNew: true
-  },
-  {
-    id: '2',
-    name: 'Nila Dining Table',
-    description: 'Solid walnut dining table with seating for six.',
-    price: 110000,
-    image: 'https://images.unsplash.com/photo-1533090481720-856c6e3c1fdc?auto=format&fit=crop&q=80&w=800',
-    hoverImage: 'https://images.unsplash.com/photo-1604578762246-41134e37f9cc?auto=format&fit=crop&q=80&w=800'
-  },
-  {
-    id: '3',
-    name: 'Tara Armchair',
-    description: 'Mid-century inspired accent chair with boucle fabric.',
-    price: 45000,
-    image: 'https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?auto=format&fit=crop&q=80&w=800',
-    hoverImage: 'https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?auto=format&fit=crop&q=80&w=800',
-    isNew: true
-  },
-  {
-    id: '4',
-    name: 'Dev Storage Cabinet',
-    description: 'Minimalist fluted wood sideboard.',
-    price: 65000,
-    image: 'https://images.unsplash.com/photo-1595515106969-1ce29566ff1c?auto=format&fit=crop&q=80&w=800',
-    hoverImage: 'https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&q=80&w=800'
-  }
-];
-
+import { products as dummyProducts } from '../data/products';
 const categories = [
   { name: 'Living Room', image: 'https://images.unsplash.com/photo-1560185127-6ed189bf02f4?auto=format&fit=crop&q=80&w=800', link: '/category/living-room' },
   { name: 'Bedroom', image: 'https://images.unsplash.com/photo-1540518614846-7eded433c457?auto=format&fit=crop&q=80&w=800', link: '/category/bedroom' },
-  { name: 'Dining Room', image: 'https://images.unsplash.com/photo-1617806118233-18e1c0945594?auto=format&fit=crop&q=80&w=800', link: '/category/dining' },
-  { name: 'Home Office', image: 'https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&q=80&w=800', link: '/category/office' },
+  { name: 'Dining Room', image: 'https://images.unsplash.com/photo-1604578762246-41134e37f9cc?auto=format&fit=crop&q=80&w=800', link: '/category/dining' },
+  { name: 'Home Office', image: 'https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&q=80&w=800', link: '/category/office' },
   { name: 'Storage', image: 'https://images.unsplash.com/photo-1595428774223-ef52624120d2?auto=format&fit=crop&q=80&w=800', link: '/category/storage' },
   { name: 'Decor', image: 'https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&q=80&w=800', link: '/category/decor' },
 ];
@@ -125,13 +89,29 @@ const Home = () => {
           className="absolute inset-0 w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-black/20" />
-        <div className="absolute inset-0 container mx-auto px-6 md:px-12 flex flex-col justify-center">
+        <div className="absolute inset-0 container mx-auto px-6 md:px-12 flex flex-col justify-center items-center">
           <motion.div 
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="max-w-2xl text-white"
+            className="max-w-3xl text-white text-center flex flex-col items-center mx-auto"
           >
+            <span className="text-sm md:text-base font-semibold uppercase tracking-widest mb-4 block text-white/90">
+              A Legacy of Excellence
+            </span>
+            <h2 className="font-serif text-4xl md:text-6xl mb-6 leading-tight">
+              Crafting Beautiful Homes for Over 20 Years
+            </h2>
+            <p className="text-base md:text-lg font-light mb-10 text-white/90 leading-relaxed max-w-xl">
+              Experience the perfect blend of timeless design and masterful craftsmanship, perfected over two decades of serving our community.
+            </p>
+            <Link 
+              to="/category/all" 
+              className="inline-flex items-center justify-center bg-white text-kairali-brown px-8 py-4 uppercase tracking-widest text-sm font-medium hover:bg-kairali-cream transition-colors rounded-sm group"
+            >
+              Explore All Collections
+              <ArrowRight size={18} className="ml-3 transform group-hover:translate-x-1 transition-transform" />
+            </Link>
           </motion.div>
         </div>
       </section>

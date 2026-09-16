@@ -2,63 +2,7 @@ import { useParams, Link } from 'react-router-dom';
 import { Filter, ChevronDown } from 'lucide-react';
 import ProductCard, { type Product } from '../components/ProductCard';
 
-const dummyProducts: Product[] = [
-  {
-    id: '1',
-    name: 'Aarav Lounge Sofa',
-    description: 'A masterpiece of comfort featuring natural linen.',
-    price: 85000,
-    image: 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&q=80&w=800',
-    hoverImage: 'https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?auto=format&fit=crop&q=80&w=800',
-    isNew: true,
-    category: 'living-room'
-  },
-  {
-    id: '2',
-    name: 'Nila Dining Table',
-    description: 'Solid walnut dining table with seating for six.',
-    price: 110000,
-    image: 'https://images.unsplash.com/photo-1533090481720-856c6e3c1fdc?auto=format&fit=crop&q=80&w=800',
-    hoverImage: 'https://images.unsplash.com/photo-1604578762246-41134e37f9cc?auto=format&fit=crop&q=80&w=800',
-    category: 'dining'
-  },
-  {
-    id: '3',
-    name: 'Tara Armchair',
-    description: 'Mid-century inspired accent chair.',
-    price: 45000,
-    image: 'https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?auto=format&fit=crop&q=80&w=800',
-    hoverImage: 'https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?auto=format&fit=crop&q=80&w=800',
-    category: 'living-room'
-  },
-  {
-    id: '4',
-    name: 'Dev Storage Cabinet',
-    description: 'Minimalist fluted wood sideboard.',
-    price: 65000,
-    image: 'https://images.unsplash.com/photo-1595515106969-1ce29566ff1c?auto=format&fit=crop&q=80&w=800',
-    hoverImage: 'https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&q=80&w=800',
-    category: 'storage'
-  },
-  {
-    id: '5',
-    name: 'Rani Accent Chair',
-    description: 'Elegant olive green velvet lounge chair.',
-    price: 52000,
-    image: 'https://images.unsplash.com/photo-1580480055273-228ff5388ef8?auto=format&fit=crop&q=80&w=800',
-    hoverImage: 'https://images.unsplash.com/photo-1615529182904-14819c35db37?auto=format&fit=crop&q=80&w=800',
-    category: 'living-room'
-  },
-  {
-    id: '6',
-    name: 'Kiran Coffee Table',
-    description: 'Round oak coffee table with a sculptural base.',
-    price: 32000,
-    image: 'https://images.unsplash.com/photo-1532372576444-dda954194ad0?auto=format&fit=crop&q=80&w=800',
-    hoverImage: 'https://images.unsplash.com/photo-1519710164239-da123dc03ef4?auto=format&fit=crop&q=80&w=800',
-    category: 'living-room'
-  }
-];
+import { products as dummyProducts } from '../data/products';
 
 const CategoryPage = () => {
   const { categoryId } = useParams();

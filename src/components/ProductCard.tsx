@@ -1,4 +1,4 @@
-﻿import { useState } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Heart } from 'lucide-react';
 import { motion } from 'framer-motion';
@@ -13,6 +13,9 @@ export interface Product {
   hoverImage: string;
   isNew?: boolean;
   category?: string;
+  images?: string[];
+  colors?: string[];
+  colorImages?: Record<string, string>;
 }
 
 interface ProductCardProps {

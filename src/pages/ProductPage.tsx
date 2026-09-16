@@ -1,9 +1,11 @@
-﻿import { useState } from 'react';
+import { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Heart, ChevronRight, Phone, MessageCircle, MapPin, Truck, ShieldCheck, Check } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useCart } from '../context/CartContext';
 import { useFavorites } from '../context/FavoriteContext';
+
+import { products } from '../data/products';
 
 const ProductPage = () => {
   const { productId } = useParams();
@@ -13,21 +15,69 @@ const ProductPage = () => {
   const { addToCart } = useCart();
   const { toggleFavorite, isFavorite } = useFavorites();
 
-  // Mock product data based on ID
+  // Find product by ID or use a fallback
+  const baseProduct = products.find(p => p.id === productId);
+
+  if (!baseProduct) {
+    return (
+      <div className="pt-24 pb-24 text-center min-h-screen">
+        <h1 className="text-2xl text-kairali-brown">Product not found</h1>
+        <Link to="/category/all" className="text-kairali-green mt-4 inline-block">Return to shop</Link>
+      </div>
+    );
+  }
+
   const product = {
-    id: productId || '1',
-    name: 'Aarav Lounge Sofa',
-    price: 85000,
-    description: 'A masterpiece of comfort featuring natural linen and a solid teak wood frame. The Aarav Lounge Sofa brings relaxed elegance to any living room, designed with deep seating and plush cushions for ultimate relaxation.',
-    dimensions: 'W: 210cm x D: 95cm x H: 82cm',
+    ...baseProduct,
+    dimensions: 'W: 210cm x D: 95cm x H: 82cm', // Mock details
     materials: 'Solid Teak Wood, High-Density Foam, 100% Natural Linen Blend',
-    colors: ['Cream', 'Olive', 'Charcoal'],
-    images: [
-      'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&q=80&w=1200',
-      'https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?auto=format&fit=crop&q=80&w=1200',
-      'https://images.unsplash.com/photo-1540574163026-643ea20abc46?auto=format&fit=crop&q=80&w=1200'
-    ]
+    colors: baseProduct.colors || [
+      'Cream', 'Olive', 'Charcoal', 'Navy Blue', 
+      'Mustard', 'Terracotta', 'Sage Green', 'Blush Pink'
+    ],
+    images: baseProduct.images || [
+      baseProduct.image,
+      baseProduct.hoverImage
+    ],
+    colorImages: baseProduct.colorImages || {}
   };
+
+  const [selectedColor, setSelectedColor] = useState(product.colors[0]);
+
+  // Synchronize color buttons and thumbnail clicks
+  const handleColorSelect = (color: string) => {
+    setSelectedColor(color);
+    if (product.colorImages && product.colorImages[color]) {
+      const idx = product.images.indexOf(product.colorImages[color]);
+      if (idx !== -1) setActiveImage(idx);
+    }
+  };
+
+  const handleImageSelect = (idx: number) => {
+    setActiveImage(idx);
+    const img = product.images[idx];
+    if (product.colorImages) {
+      const colorEntry = Object.entries(product.colorImages).find(([_, url]) => url === img);
+      if (colorEntry) {
+        setSelectedColor(colorEntry[0]);
+      }
+    }
+  };
+
+  const colorMap: Record<string, string> = {
+    'Cream': '#FDFBF7',
+    'Olive': '#556B2F',
+    'Charcoal': '#36454F',
+    'Navy Blue': '#000080',
+    'Mustard': '#FFDB58',
+    'Terracotta': '#E2725B',
+    'Sage Green': '#9DC183',
+    'Blush Pink': '#FFB6C1',
+    'Grey': '#808080'
+  };
+  
+  // Check if we need to use a CSS overlay for color because no explicit image is provided
+  const needsColorOverlay = selectedColor && (!product.colorImages || !product.colorImages[selectedColor]);
 
   // Convert for cart/favorites
   const productForCart = {
@@ -43,8 +93,6 @@ const ProductPage = () => {
   const [added, setAdded] = useState(false);
 
   const handleAddToCart = () => {
-    // Add multiple quantities if needed, but our cart context addToCart just increments by 1 if exists, or sets to 1.
-    // For a real app, we'd add `quantity` to the action. For now, let's just add it multiple times or use the context.
     for (let i = 0; i < quantity; i++) {
       addToCart(productForCart);
     }
@@ -59,26 +107,28 @@ const ProductPage = () => {
         <div className="flex items-center text-xs text-kairali-brown/60 uppercase tracking-wider mb-8">
           <Link to="/" className="hover:text-kairali-brown">Home</Link>
           <ChevronRight size={12} className="mx-2" />
-          <Link to="/category/living-room" className="hover:text-kairali-brown">Living Room</Link>
+          <Link to={`/category/${product.category || 'all'}`} className="hover:text-kairali-brown">
+            {product.category ? product.category.replace('-', ' ') : 'All Products'}
+          </Link>
           <ChevronRight size={12} className="mx-2" />
           <span className="text-kairali-brown font-medium">{product.name}</span>
         </div>
 
         <div className="flex flex-col lg:flex-row gap-12 lg:gap-20">
           {/* Images */}
-          <div className="w-full lg:w-3/5 flex gap-4">
-            <div className="flex flex-col gap-4 w-20 shrink-0">
+          <div className="w-full lg:w-3/5 flex flex-col-reverse md:flex-row gap-4">
+            <div className="flex flex-row md:flex-col gap-4 w-full md:w-20 overflow-x-auto shrink-0 hide-scrollbar">
               {product.images.map((img, idx) => (
                 <button 
                   key={idx} 
-                  onClick={() => setActiveImage(idx)}
-                  className={`aspect-square overflow-hidden rounded-sm border-2 ${activeImage === idx ? 'border-kairali-green' : 'border-transparent'}`}
+                  onClick={() => handleImageSelect(idx)}
+                  className={`aspect-square md:w-20 shrink-0 overflow-hidden rounded-sm border-2 bg-white ${activeImage === idx ? 'border-kairali-green' : 'border-transparent'}`}
                 >
                   <img src={img} alt={`Thumbnail ${idx}`} className="w-full h-full object-cover" />
                 </button>
               ))}
             </div>
-            <div className="flex-grow aspect-[4/3] bg-kairali-beige/30 overflow-hidden rounded-sm relative">
+            <div className="flex-grow h-[350px] lg:h-[500px] w-full bg-white overflow-hidden rounded-sm relative">
               <motion.img 
                 key={activeImage}
                 initial={{ opacity: 0 }}
@@ -86,7 +136,7 @@ const ProductPage = () => {
                 transition={{ duration: 0.5 }}
                 src={product.images[activeImage]} 
                 alt={product.name} 
-                className="absolute inset-0 w-full h-full object-cover"
+                className="w-full h-full object-cover object-center"
               />
             </div>
           </div>
@@ -103,9 +153,17 @@ const ProductPage = () => {
             <div className="mb-8 border-t border-b border-kairali-beige py-6">
               <div className="mb-4">
                 <span className="text-sm font-semibold uppercase tracking-wider text-kairali-brown block mb-2">Available Colors</span>
-                <div className="flex gap-3">
+                <div className="flex flex-wrap gap-3">
                   {product.colors.map(color => (
-                    <button key={color} className="border border-kairali-beige px-4 py-2 text-sm text-kairali-brown hover:border-kairali-brown transition-colors">
+                    <button 
+                      key={color} 
+                      onClick={() => handleColorSelect(color)}
+                      className={`border px-4 py-2 text-sm transition-colors ${
+                        selectedColor === color 
+                          ? 'border-kairali-brown bg-kairali-brown text-white' 
+                          : 'border-kairali-beige text-kairali-brown hover:border-kairali-brown'
+                      }`}
+                    >
                       {color}
                     </button>
                   ))}
@@ -141,12 +199,20 @@ const ProductPage = () => {
               </div>
               
               <div className="grid grid-cols-2 gap-4">
-                <button className="flex items-center justify-center gap-2 border border-[#25D366] text-[#25D366] h-12 uppercase tracking-widest text-xs font-semibold hover:bg-[#25D366]/10 transition-colors rounded-sm">
+                <a 
+                  href={`https://wa.me/919497694866?text=Hi, I'm interested in the ${encodeURIComponent(product.name)} (₹${product.price.toLocaleString('en-IN')}).`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center gap-2 border border-[#25D366] text-[#25D366] h-12 uppercase tracking-widest text-xs font-semibold hover:bg-[#25D366]/10 transition-colors rounded-sm"
+                >
                   <MessageCircle size={16} /> WhatsApp Us
-                </button>
-                <button className="flex items-center justify-center gap-2 border border-kairali-brown text-kairali-brown h-12 uppercase tracking-widest text-xs font-semibold hover:bg-kairali-beige transition-colors rounded-sm">
+                </a>
+                <a 
+                  href="tel:+919497694866"
+                  className="flex items-center justify-center gap-2 border border-kairali-brown text-kairali-brown h-12 uppercase tracking-widest text-xs font-semibold hover:bg-kairali-beige transition-colors rounded-sm"
+                >
                   <Phone size={16} /> Call to Enquire
-                </button>
+                </a>
               </div>
             </div>
 

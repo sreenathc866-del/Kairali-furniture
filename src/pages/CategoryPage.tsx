@@ -1,6 +1,6 @@
 import { useParams, Link } from 'react-router-dom';
 import { Filter, ChevronDown } from 'lucide-react';
-import ProductCard, { type Product } from '../components/ProductCard';
+import ProductCard from '../components/ProductCard';
 
 import { products as dummyProducts } from '../data/products';
 

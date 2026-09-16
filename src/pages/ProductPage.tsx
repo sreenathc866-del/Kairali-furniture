@@ -64,21 +64,6 @@ const ProductPage = () => {
     }
   };
 
-  const colorMap: Record<string, string> = {
-    'Cream': '#FDFBF7',
-    'Olive': '#556B2F',
-    'Charcoal': '#36454F',
-    'Navy Blue': '#000080',
-    'Mustard': '#FFDB58',
-    'Terracotta': '#E2725B',
-    'Sage Green': '#9DC183',
-    'Blush Pink': '#FFB6C1',
-    'Grey': '#808080'
-  };
-  
-  // Check if we need to use a CSS overlay for color because no explicit image is provided
-  const needsColorOverlay = selectedColor && (!product.colorImages || !product.colorImages[selectedColor]);
-
   // Convert for cart/favorites
   const productForCart = {
     id: product.id,

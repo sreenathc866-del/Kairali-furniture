@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowRight, MapPin, Phone } from 'lucide-react';
 import { FaInstagram } from 'react-icons/fa';
-import ProductCard, { type Product } from '../components/ProductCard';
+import ProductCard from '../components/ProductCard';
 
 import { products as dummyProducts } from '../data/products';
 const categories = [

@@ -318,7 +318,7 @@ const Home = () => {
             >
               <div className="aspect-square rounded-sm overflow-hidden bg-kairali-beige relative">
                 <img 
-                  src="https://images.unsplash.com/photo-1618220179428-22790b46a0eb?auto=format&fit=crop&q=80&w=1000" 
+                  src="https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&q=80&w=1000" 
                   alt="About Kairali Furniture" 
                   className="w-full h-full object-cover"
                 />

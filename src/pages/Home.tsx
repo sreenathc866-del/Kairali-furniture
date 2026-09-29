@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowRight, MapPin, Phone } from 'lucide-react';
-import { FaInstagram } from 'react-icons/fa';
+import { FaInstagram, FaWhatsapp } from 'react-icons/fa';
 import ProductCard from '../components/ProductCard';
 
 import { products as dummyProducts } from '../data/products';
@@ -100,18 +100,20 @@ const Home = () => {
               A Legacy of Excellence
             </span>
             <h2 className="font-serif text-4xl md:text-6xl mb-6 leading-tight">
-              Crafting Beautiful Homes for Over 20 Years
+              Crafting Beautiful Homes for Over 25 Years
             </h2>
             <p className="text-base md:text-lg font-light mb-10 text-white/90 leading-relaxed max-w-xl">
               Experience the perfect blend of timeless design and masterful craftsmanship, perfected over two decades of serving our community.
             </p>
-            <Link 
-              to="/category/all" 
-              className="inline-flex items-center justify-center bg-white text-kairali-brown px-8 py-4 uppercase tracking-widest text-sm font-medium hover:bg-kairali-cream transition-colors rounded-sm group"
+            <a 
+              href="https://wa.me/919497694866" 
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center bg-white text-kairali-brown px-10 py-5 uppercase tracking-widest text-base font-semibold hover:bg-kairali-cream transition-colors rounded-sm group shadow-lg"
             >
-              Explore All Collections
-              <ArrowRight size={18} className="ml-3 transform group-hover:translate-x-1 transition-transform" />
-            </Link>
+              WhatsApp Us
+              <FaWhatsapp size={24} color="#25D366" className="ml-3 transform group-hover:scale-110 transition-transform" />
+            </a>
           </motion.div>
         </div>
       </section>
